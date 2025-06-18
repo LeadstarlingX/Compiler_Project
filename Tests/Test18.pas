@@ -1,12 +1,17 @@
-// Test 18: Global Array Declaration and Access
-// Tests declaration, assignment, and retrieval for a global array.
+// Test 14: Simple Function Call
+// Tests defining and calling a function that returns a literal.
 
-PROGRAM Test18;
+PROGRAM Test14;
 VAR
-  my_array: ARRAY[0..4] OF INTEGER;
+  result: INTEGER;
+FUNCTION GetNumber: INTEGER;
 BEGIN
-  my_array[2] := 88;
-  writeln(my_array[2]);
+  RETURN 100;
+END;
+
+BEGIN
+  result := GetNumber;
+  writeln(result);
 END.
 
-// Expected Output: 88
+// Expected Output: 100

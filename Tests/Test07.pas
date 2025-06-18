@@ -1,12 +1,12 @@
-// Test 7: Operator Precedence
-// Ensures multiplication is performed before addition.
+// Test 3: Global Boolean Declaration and Assignment
+// Verifies basic global boolean variable handling.
 
-PROGRAM Test7;
+PROGRAM Test3;
 VAR
-  result: INTEGER;
+  my_bool: BOOLEAN;
 BEGIN
-  result := 2 + 3 * 4; // Should be 2 + 12 = 14
-  writeln(result);
+  my_bool := TRUE;
+  writeln(my_bool);
 END.
 
-// Expected Output: 14
+// Expected Output: 1

@@ -1,18 +1,21 @@
-// Test 32: Type Promotion in Function Return
-// Tests that an INTEGER parameter can be used in a REAL calculation and returned as a REAL.
+// Test 28: Relational Operators with REALs
+// Tests that >, <, and = work correctly with REAL values.
 
-PROGRAM Test32;
-VAR
-  result: REAL;
-
-FUNCTION AddReal(val: INTEGER): REAL;
+PROGRAM Test28;
 BEGIN
-  RETURN val + 0.5;
-END;
+  IF 5.5 > 5.4 THEN
+    writeln('Test 1 Passed');
+  
+  IF 99.8 < 99.9 THEN
+    writeln('Test 2 Passed');
 
-BEGIN
-  result := AddReal(10);
-  writeln(result);
+  IF NOT (3.14 = 3.15) THEN
+    writeln('Test 3 Passed');
 END.
 
-// Expected Output: 10.5
+{
+Expected Output:
+Test 1 Passed
+Test 2 Passed
+Test 3 Passed
+}

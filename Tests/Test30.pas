@@ -1,15 +1,20 @@
-// Test 30: WHILE Loop with False Condition
-// Ensures a WHILE loop's body is not executed if the condition is initially false.
+// Test 26: Empty BEGIN-END Block
+// Ensures the parser and generator can handle empty compound statements.
 
-PROGRAM Test30;
-VAR
-  x : INTEGER;
+PROGRAM Test26;
+PROCEDURE EmptyBody;
 BEGIN
-  x := 100;
-  WHILE FALSE DO
-    x := 0; // This should not execute
-  
-  writeln(x);
+  // This space is intentionally left blank
+END;
+
+BEGIN
+  writeln('Before call');
+  EmptyBody;
+  writeln('After call');
 END.
 
-// Expected Output: 100
+{
+Expected Output:
+Before call
+After call
+}

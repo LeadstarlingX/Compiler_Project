@@ -1,20 +1,20 @@
-// Test 21: Read a Single Integer
-// Verifies the implementation of the `read` procedure for a single integer.
+// Test 17: Global Variable Access From Function
+// Ensures a function can read a global variable.
 
-PROGRAM Test21;
+PROGRAM Test17;
 VAR
-  input_val: INTEGER;
+  global_factor: INTEGER;
+  result: INTEGER;
+
+FUNCTION MultiplyByGlobal(val: INTEGER): INTEGER;
 BEGIN
-  writeln('Enter an integer:');
-  read(input_val);
-  writeln('Value read * 2 =');
-  writeln(input_val * 2);
+  RETURN val * global_factor;
+END;
+
+BEGIN
+  global_factor := 3;
+  result := MultiplyByGlobal(10);
+  writeln(result);
 END.
 
-{
-Expected Output:
-Enter an integer:
-(User enters 15)
-Value read * 2 =
-30
-}
+// Expected Output: 30

@@ -1,34 +1,22 @@
-// Test 31: Chained Procedure Calls
-// Tests if multiple procedures can call each other in a sequence.
+// Test 27: Passing Array Element as Parameter
+// Tests if an array element can be evaluated and passed as a value to a procedure.
 
-PROGRAM Test31;
-PROCEDURE ProcC(val: INTEGER);
+PROGRAM Test27;
+VAR
+  global_arr: ARRAY[1..3] OF INTEGER;
+
+PROCEDURE PrintValue(val: INTEGER);
 BEGIN
-  write('C received: ');
+  writeln('Value passed to procedure:');
   writeln(val);
 END;
 
-PROCEDURE ProcB(val: INTEGER);
 BEGIN
-  write('B received: ');
-  writeln(val);
-  ProcC(val * 2);
-END;
-
-PROCEDURE ProcA(val: INTEGER);
-BEGIN
-  write('A received: ');
-  writeln(val);
-  ProcB(val + 5);
-END;
-
-BEGIN
-  ProcA(10);
+  global_arr[1] := 11;
+  global_arr[2] := 22;
+  global_arr[3] := 33;
+  PrintValue(global_arr[2]);
 END.
 
-{
-expectedOutput:
-A received: 10
-B received: 15
-C received: 30
-}
+// Expected Output:
+// Value passed to procedure: 22

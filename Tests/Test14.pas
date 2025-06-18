@@ -1,17 +1,18 @@
-// Test 14: Simple Function Call
-// Tests defining and calling a function that returns a literal.
+// Test 10: IF-THEN-ELSE Statement
+// Tests that both branches of an IF-THEN-ELSE statement work correctly.
 
-PROGRAM Test14;
+PROGRAM Test10;
 VAR
-  result: INTEGER;
-FUNCTION GetNumber: INTEGER;
+  x: INTEGER;
+  cond: BOOLEAN;
 BEGIN
-  RETURN 100;
-END;
-
-BEGIN
-  result := GetNumber;
-  writeln(result);
+  cond := FALSE;
+  x := 0;
+  IF cond THEN
+    x := 1
+  ELSE
+    x := 2;
+  writeln(x);
 END.
 
-// Expected Output: 100
+// Expected Output: 2

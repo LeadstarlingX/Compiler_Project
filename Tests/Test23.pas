@@ -1,28 +1,17 @@
-// Test 23: Nested IF Statements
-// Verifies correct branching with nested conditional logic.
+// Test 19: Array Access with a Variable Index
+// Tests using a variable to index into an array.
 
-PROGRAM Test23;
+PROGRAM Test19;
 VAR
-  a, b: INTEGER;
+  my_array: ARRAY[1..5] OF INTEGER;
+  idx, val: INTEGER;
 BEGIN
-  a := 10;
-  b := 10;
-  IF a = 10 THEN
-  BEGIN
-    writeln('Outer IF is true');
-    IF b > 15 THEN
-    BEGIN
-      writeln('Inner IF is true');
-    END
-    ELSE
-      writeln('Inner IF is false');
-  END
-  ELSE
-    writeln('Outer IF is false');
+  my_array[1] := 10;
+  my_array[2] := 20;
+  my_array[3] := 30;
+  idx := 3;
+  val := my_array[idx];
+  writeln(val);
 END.
 
-{
-Expected Output:
-Outer IF is true
-Inner IF is false
-}
+// Expected Output: 30

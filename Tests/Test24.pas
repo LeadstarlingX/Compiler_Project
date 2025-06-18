@@ -1,29 +1,24 @@
-// Test 24: Comprehensive Logical Operators
-// Tests AND, OR, and NOT operators and their precedence.
+// Test 20: Name Scoping (Shadowing)
+// Tests that a local variable correctly 'shadows' a global variable of the same name.
 
-PROGRAM Test24;
+PROGRAM Test20;
 VAR
-  a, b, c, d: BOOLEAN;
+  x: INTEGER; // Global x
+
+PROCEDURE ShadowTest;
+  VAR
+    x: INTEGER; // Local x
+  BEGIN
+    x := 99; // Should modify local x
+    writeln(x);
+  END;
+
 BEGIN
-  // (TRUE OR FALSE) -> TRUE
-  a := TRUE OR FALSE; 
-  // (TRUE AND FALSE) -> FALSE
-  b := TRUE AND FALSE;
-  // NOT (TRUE AND FALSE) -> NOT FALSE -> TRUE
-  c := NOT (TRUE AND FALSE); 
-  // TRUE OR TRUE AND FALSE -> TRUE AND FALSE -> FALSE
-  d := TRUE OR TRUE AND FALSE; 
-  
-  writeln(a);
-  writeln(b);
-  writeln(c);
-  writeln(d);
+  x := 1; // Modify global x
+  ShadowTest; // Should print 99
+  writeln(x);   // Should print 1 (global x is unchanged)
 END.
 
-{
-Expected Output:
-1
-0
-1
-1
-}
+// Expected Output:
+// 99
+// 1

@@ -1,21 +1,20 @@
-// Test 25: Recursive Function (Factorial)
-// Tests if a function can correctly call itself and manage the stack.
+// Test 21: Read a Single Integer
+// Verifies the implementation of the `read` procedure for a single integer.
 
-PROGRAM Test25;
+PROGRAM Test21;
 VAR
-  result: INTEGER;
-
-FUNCTION Factorial(n: INTEGER): INTEGER;
+  input_val: INTEGER;
 BEGIN
-  IF n > 1 THEN
-    RETURN n * Factorial(n-1)
-  ELSE
-    RETURN 1;
-END;
-
-BEGIN
-  result := Factorial(5); // 5 * 4 * 3 * 2 * 1 = 120
-  writeln(result);
+  writeln('Enter an integer:');
+  read(input_val);
+  writeln('Value read * 2 =');
+  writeln(input_val * 2);
 END.
 
-// Expected Output: 120
+{
+Expected Output:
+Enter an integer:
+(User enters 15)
+Value read * 2 =
+30
+}

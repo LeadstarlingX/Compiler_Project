@@ -1,20 +1,14 @@
-// Test 17: Global Variable Access From Function
-// Ensures a function can read a global variable.
+// Test 13: Procedure with a Value Parameter
+// Tests passing a value to a procedure parameter.
 
-PROGRAM Test17;
-VAR
-  global_factor: INTEGER;
-  result: INTEGER;
-
-FUNCTION MultiplyByGlobal(val: INTEGER): INTEGER;
+PROGRAM Test13;
+PROCEDURE PrintValue(val: INTEGER);
 BEGIN
-  RETURN val * global_factor;
+  writeln(val);
 END;
 
 BEGIN
-  global_factor := 3;
-  result := MultiplyByGlobal(10);
-  writeln(result);
+  PrintValue(42);
 END.
 
-// Expected Output: 30
+// Expected Output: 42

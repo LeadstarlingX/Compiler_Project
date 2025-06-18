@@ -1,14 +1,17 @@
-// Test 9: Simple IF-THEN Statement
-// Tests a simple IF-THEN statement with a true condition.
+// Test 5: Integer and Real Division
+// Tests REAL division (/) and INTEGER division (DIV).
 
-PROGRAM Test9;
+PROGRAM Test5;
 VAR
-  x: INTEGER;
+  r_result: REAL;
+  i_result: INTEGER;
 BEGIN
-  x := 10;
-  IF TRUE THEN
-    x := 99;
-  writeln(x);
+  r_result := 10 / 4;  // 2.5
+  i_result := 10 DIV 4; // 2
+  writeln(r_result);
+  writeln(i_result);
 END.
 
-// Expected Output: 99
+// Expected Output:
+// 2.5
+// 2

@@ -1,14 +1,14 @@
-// Test 13: Procedure with a Value Parameter
-// Tests passing a value to a procedure parameter.
+// Test 9: Simple IF-THEN Statement
+// Tests a simple IF-THEN statement with a true condition.
 
-PROGRAM Test13;
-PROCEDURE PrintValue(val: INTEGER);
+PROGRAM Test9;
+VAR
+  x: INTEGER;
 BEGIN
-  writeln(val);
-END;
-
-BEGIN
-  PrintValue(42);
+  x := 10;
+  IF TRUE THEN
+    x := 99;
+  writeln(x);
 END.
 
-// Expected Output: 42
+// Expected Output: 99

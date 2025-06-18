@@ -1,20 +1,22 @@
-// Test 26: Empty BEGIN-END Block
-// Ensures the parser and generator can handle empty compound statements.
+// Test 22: Read Multiple Values
+// Tests the ability to read into multiple variables in a single `read` call.
 
-PROGRAM Test26;
-PROCEDURE EmptyBody;
+PROGRAM Test22;
+VAR
+  a: INTEGER;
+  b: REAL;
 BEGIN
-  // This space is intentionally left blank
-END;
-
-BEGIN
-  writeln('Before call');
-  EmptyBody;
-  writeln('After call');
+  writeln('Enter an integer, then a real number:');
+  read(a, b);
+  writeln('Your values were:');
+  writeln(a);
+  writeln(b);
 END.
 
 {
-Expected Output:
-Before call
-After call
+Enter an integer, then a real number:
+(User enters 42, then 99.5)
+Your values were:
+42
+99.5
 }

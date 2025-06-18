@@ -1,12 +1,10 @@
-// Test 2: Global Real Declaration and Assignment
-// Verifies basic global real variable handling.
+program test13;
+// Purpose: Demonstrate a semantic error for calling an undeclared function.
+// ERROR: 'calculate_sum' is not defined in this scope.
 
-PROGRAM Test2;
-VAR
-  my_real: REAL;
-BEGIN
-  my_real := 45.67;
-  writeln(my_real);
-END.
+var
+  result : integer;
 
-// Expected Output: 45.67
+begin
+  result := calculate_sum(5, 10); // This should fail.
+end.

@@ -1,17 +1,17 @@
-// Test 19: Array Access with a Variable Index
-// Tests using a variable to index into an array.
+// Test 15: Function with Parameters
+// Tests a function that uses parameters in its calculation.
 
-PROGRAM Test19;
+PROGRAM Test15;
 VAR
-  my_array: ARRAY[1..5] OF INTEGER;
-  idx, val: INTEGER;
+  result: INTEGER;
+FUNCTION Subtract(a: INTEGER; b: INTEGER): INTEGER;
 BEGIN
-  my_array[1] := 10;
-  my_array[2] := 20;
-  my_array[3] := 30;
-  idx := 3;
-  val := my_array[idx];
-  writeln(val);
+  RETURN a - b;
+END;
+
+BEGIN
+  result := Subtract(10, 3);
+  writeln(result);
 END.
 
-// Expected Output: 30
+// Expected Output: 7

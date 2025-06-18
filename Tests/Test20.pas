@@ -1,24 +1,20 @@
-// Test 20: Name Scoping (Shadowing)
-// Tests that a local variable correctly 'shadows' a global variable of the same name.
+// Test 16: Function with a Local Variable
+// Tests that a function can declare and use its own local variables.
 
-PROGRAM Test20;
+PROGRAM Test16;
 VAR
-  x: INTEGER; // Global x
-
-PROCEDURE ShadowTest;
+  result: INTEGER;
+FUNCTION Calc: INTEGER;
   VAR
-    x: INTEGER; // Local x
+    local_val: INTEGER;
   BEGIN
-    x := 99; // Should modify local x
-    writeln(x);
+    local_val := 50;
+    RETURN local_val * 2;
   END;
 
 BEGIN
-  x := 1; // Modify global x
-  ShadowTest; // Should print 99
-  writeln(x);   // Should print 1 (global x is unchanged)
+  result := Calc;
+  writeln(result);
 END.
 
-// Expected Output:
-// 99
-// 1
+// Expected Output: 100

@@ -1,16 +1,21 @@
-// Test 29: Unary Minus Precedence
-// Tests that unary minus is handled correctly in an expression.
+// Test 25: Recursive Function (Factorial)
+// Tests if a function can correctly call itself and manage the stack.
 
-PROGRAM Test29;
+PROGRAM Test25;
 VAR
-  x, y : INTEGER;
+  result: INTEGER;
+
+FUNCTION Factorial(n: INTEGER): INTEGER;
 BEGIN
-  x := 10;
-  y := -x; // y should be -10
-  writeln(y);
-  writeln(x - -3); // 10 - (-3) = 13
+  IF n > 1 THEN
+    RETURN n * Factorial(n-1)
+  ELSE
+    RETURN 1;
+END;
+
+BEGIN
+  result := Factorial(5); // 5 * 4 * 3 * 2 * 1 = 120
+  writeln(result);
 END.
 
-// Expected Output:
-// -10
-// 13
+// Expected Output: 120

@@ -1,17 +1,19 @@
-// Test 15: Function with Parameters
-// Tests a function that uses parameters in its calculation.
+// Test 11: WHILE Loop
+// Tests a simple WHILE loop for correct iteration and termination.
 
-PROGRAM Test15;
+PROGRAM Test11;
 VAR
-  result: INTEGER;
-FUNCTION Subtract(a: INTEGER; b: INTEGER): INTEGER;
+  i: INTEGER;
 BEGIN
-  RETURN a - b;
-END;
-
-BEGIN
-  result := Subtract(10, 3);
-  writeln(result);
+  i := 0;
+  WHILE i < 3 DO
+  BEGIN
+    write(i);
+    i := i + 1;
+  END;
+  writeln;
 END.
-
-// Expected Output: 7
+// Expected Output:
+// 0
+// 1
+// 2

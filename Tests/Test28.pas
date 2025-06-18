@@ -1,21 +1,29 @@
-// Test 28: Relational Operators with REALs
-// Tests that >, <, and = work correctly with REAL values.
+// Test 24: Comprehensive Logical Operators
+// Tests AND, OR, and NOT operators and their precedence.
 
-PROGRAM Test28;
+PROGRAM Test24;
+VAR
+  a, b, c, d: BOOLEAN;
 BEGIN
-  IF 5.5 > 5.4 THEN
-    writeln('Test 1 Passed');
+  // (TRUE OR FALSE) -> TRUE
+  a := TRUE OR FALSE; 
+  // (TRUE AND FALSE) -> FALSE
+  b := TRUE AND FALSE;
+  // NOT (TRUE AND FALSE) -> NOT FALSE -> TRUE
+  c := NOT (TRUE AND FALSE); 
+  // TRUE OR TRUE AND FALSE -> TRUE AND FALSE -> FALSE
+  d := TRUE OR TRUE AND FALSE; 
   
-  IF 99.8 < 99.9 THEN
-    writeln('Test 2 Passed');
-
-  IF NOT (3.14 = 3.15) THEN
-    writeln('Test 3 Passed');
+  writeln(a);
+  writeln(b);
+  writeln(c);
+  writeln(d);
 END.
 
 {
 Expected Output:
-Test 1 Passed
-Test 2 Passed
-Test 3 Passed
+1
+0
+1
+1
 }

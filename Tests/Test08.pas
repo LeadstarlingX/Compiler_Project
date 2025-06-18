@@ -1,12 +1,14 @@
-// Test 8: Parentheses in Expressions
-// Ensures parentheses override default operator precedence.
+// Test 4: Basic Arithmetic Operations
+// Tests integer addition, subtraction, and multiplication.
 
-PROGRAM Test8;
+PROGRAM Test4;
 VAR
-  result: INTEGER;
+  a, b, c: INTEGER;
 BEGIN
-  result := (2 + 3) * 4; // Should be 5 * 4 = 20
-  writeln(result);
+  a := 10 + 5;  // 15
+  b := a - 3;   // 12
+  c := b * 2;   // 24
+  writeln(c);
 END.
 
-// Expected Output: 20
+// Expected Output: 24

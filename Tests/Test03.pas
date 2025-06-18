@@ -1,12 +1,14 @@
-// Test 3: Global Boolean Declaration and Assignment
-// Verifies basic global boolean variable handling.
+program test12;
+// Purpose: Demonstrate a semantic type mismatch error.
+// ERROR: Attempting to perform arithmetic on incompatible types (integer and boolean).
 
-PROGRAM Test3;
-VAR
-  my_bool: BOOLEAN;
-BEGIN
-  my_bool := TRUE;
-  writeln(my_bool);
-END.
+var
+  a : integer;
+  b : boolean;
+  c : integer;
 
-// Expected Output: 1
+begin
+  a := 10;
+  b := true;
+  c := a + b; // This line should fail the semantic analysis.
+end.

@@ -1,14 +1,12 @@
-// Test 12: Simple Procedure Call
-// Tests defining and calling a procedure with no parameters.
+// Test 8: Parentheses in Expressions
+// Ensures parentheses override default operator precedence.
 
-PROGRAM Test12;
-PROCEDURE DoPrint;
+PROGRAM Test8;
+VAR
+  result: INTEGER;
 BEGIN
-  writeln('Inside procedure');
-END;
-
-BEGIN
-  DoPrint;
+  result := (2 + 3) * 4; // Should be 5 * 4 = 20
+  writeln(result);
 END.
 
-// Expected Output: Inside procedure
+// Expected Output: 20

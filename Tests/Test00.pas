@@ -1,21 +1,26 @@
-PROGRAM FullTest;
-VAR
-  x, y, z: INTEGER;
-  
-FUNCTION addition(a: INTEGER; b: INTEGER): INTEGER;
-  VAR
-    result: INTEGER;
-  BEGIN
-    result := a + b;
-    RETURN result;
-  END;
+// Purpose: Demonstrate successful usage of arrays, including
+// declaration, initialization, and iteration with a while loop.
 
-BEGIN
-  x := 15;
-  y := 27;
-  z := addition(x, y);
-  write('The result of add(15, 27) is: ', z);
-  writeln;
-END.
+var
+  numbers : array[1..5] of integer;
+  total   : integer;
+  index   : integer;
 
-// Expected Output: 42
+begin
+  // Initialize the array elements
+  numbers[1] := 10;
+  numbers[2] := 20;
+  numbers[3] := 30;
+  numbers[4] := 40;
+  numbers[5] := 50;
+
+  // Sum the elements of the array
+  total := 0;
+  index := 1;
+  while index <= 5 do
+  begin
+    total := total + numbers[index];
+    index := index + 1;
+  end;
+  // At the end, non-zero code 
+end.

@@ -1,18 +1,16 @@
-// Test 10: IF-THEN-ELSE Statement
-// Tests that both branches of an IF-THEN-ELSE statement work correctly.
+// Test 6: Type Promotion in Expressions
+// Ensures an INTEGER added to a REAL promotes the result to REAL.
 
-PROGRAM Test10;
+PROGRAM Test6;
 VAR
-  x: INTEGER;
-  cond: BOOLEAN;
+  my_int: INTEGER;
+  my_real: REAL;
+  result: REAL;
 BEGIN
-  cond := FALSE;
-  x := 0;
-  IF cond THEN
-    x := 1
-  ELSE
-    x := 2;
-  writeln(x);
+  my_int := 5;
+  my_real := 2.5;
+  result := my_int + my_real;
+  writeln(result);
 END.
 
-// Expected Output: 2
+// Expected Output: 7.5

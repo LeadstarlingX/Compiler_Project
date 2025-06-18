@@ -1,14 +1,21 @@
-// Test 4: Basic Arithmetic Operations
-// Tests integer addition, subtraction, and multiplication.
-
-PROGRAM Test4;
+PROGRAM FullTest;
 VAR
-  a, b, c: INTEGER;
+  x, y, z: INTEGER;
+  
+FUNCTION addition(a: INTEGER; b: INTEGER): INTEGER;
+  VAR
+    result: INTEGER;
+  BEGIN
+    result := a + b;
+    RETURN result;
+  END;
+
 BEGIN
-  a := 10 + 5;  // 15
-  b := a - 3;   // 12
-  c := b * 2;   // 24
-  writeln(c);
+  x := 15;
+  y := 27;
+  z := addition(x, y);
+  write('The result of add(15, 27) is: ', z);
+  writeln;
 END.
 
-// Expected Output: 24
+// Expected Output: 42

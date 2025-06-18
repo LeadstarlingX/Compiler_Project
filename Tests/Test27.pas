@@ -1,22 +1,28 @@
-// Test 27: Passing Array Element as Parameter
-// Tests if an array element can be evaluated and passed as a value to a procedure.
+// Test 23: Nested IF Statements
+// Verifies correct branching with nested conditional logic.
 
-PROGRAM Test27;
+PROGRAM Test23;
 VAR
-  global_arr: ARRAY[1..3] OF INTEGER;
-
-PROCEDURE PrintValue(val: INTEGER);
+  a, b: INTEGER;
 BEGIN
-  writeln('Value passed to procedure:');
-  writeln(val);
-END;
-
-BEGIN
-  global_arr[1] := 11;
-  global_arr[2] := 22;
-  global_arr[3] := 33;
-  PrintValue(global_arr[2]);
+  a := 10;
+  b := 10;
+  IF a = 10 THEN
+  BEGIN
+    writeln('Outer IF is true');
+    IF b > 15 THEN
+    BEGIN
+      writeln('Inner IF is true');
+    END
+    ELSE
+      writeln('Inner IF is false');
+  END
+  ELSE
+    writeln('Outer IF is false');
 END.
 
-// Expected Output:
-// Value passed to procedure: 22
+{
+Expected Output:
+Outer IF is true
+Inner IF is false
+}

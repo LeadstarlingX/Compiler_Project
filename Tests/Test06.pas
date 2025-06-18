@@ -1,16 +1,12 @@
-// Test 6: Type Promotion in Expressions
-// Ensures an INTEGER added to a REAL promotes the result to REAL.
+// Test 2: Global Real Declaration and Assignment
+// Verifies basic global real variable handling.
 
-PROGRAM Test6;
+PROGRAM Test2;
 VAR
-  my_int: INTEGER;
   my_real: REAL;
-  result: REAL;
 BEGIN
-  my_int := 5;
-  my_real := 2.5;
-  result := my_int + my_real;
-  writeln(result);
+  my_real := 45.67;
+  writeln(my_real);
 END.
 
-// Expected Output: 7.5
+// Expected Output: 45.67

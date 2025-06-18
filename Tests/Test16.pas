@@ -1,20 +1,14 @@
-// Test 16: Function with a Local Variable
-// Tests that a function can declare and use its own local variables.
+// Test 12: Simple Procedure Call
+// Tests defining and calling a procedure with no parameters.
 
-PROGRAM Test16;
-VAR
-  result: INTEGER;
-FUNCTION Calc: INTEGER;
-  VAR
-    local_val: INTEGER;
-  BEGIN
-    local_val := 50;
-    RETURN local_val * 2;
-  END;
+PROGRAM Test12;
+PROCEDURE DoPrint;
+BEGIN
+  writeln('Inside procedure');
+END;
 
 BEGIN
-  result := Calc;
-  writeln(result);
+  DoPrint;
 END.
 
-// Expected Output: 100
+// Expected Output: Inside procedure

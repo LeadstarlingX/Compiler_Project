@@ -1,19 +1,12 @@
-// Test 11: WHILE Loop
-// Tests a simple WHILE loop for correct iteration and termination.
+// Test 7: Operator Precedence
+// Ensures multiplication is performed before addition.
 
-PROGRAM Test11;
+PROGRAM Test7;
 VAR
-  i: INTEGER;
+  result: INTEGER;
 BEGIN
-  i := 0;
-  WHILE i < 3 DO
-  BEGIN
-    write(i);
-    i := i + 1;
-  END;
-  writeln;
+  result := 2 + 3 * 4; // Should be 2 + 12 = 14
+  writeln(result);
 END.
-// Expected Output:
-// 0
-// 1
-// 2
+
+// Expected Output: 14

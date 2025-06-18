@@ -1,22 +1,12 @@
-// Test 22: Read Multiple Values
-// Tests the ability to read into multiple variables in a single `read` call.
+// Test 18: Global Array Declaration and Access
+// Tests declaration, assignment, and retrieval for a global array.
 
-PROGRAM Test22;
+PROGRAM Test18;
 VAR
-  a: INTEGER;
-  b: REAL;
+  my_array: ARRAY[0..4] OF INTEGER;
 BEGIN
-  writeln('Enter an integer, then a real number:');
-  read(a, b);
-  writeln('Your values were:');
-  writeln(a);
-  writeln(b);
+  my_array[2] := 88;
+  writeln(my_array[2]);
 END.
 
-{
-Enter an integer, then a real number:
-(User enters 42, then 99.5)
-Your values were:
-42
-99.5
-}
+// Expected Output: 88

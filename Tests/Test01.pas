@@ -1,12 +1,14 @@
-// Test 1: Global Integer Declaration and Assignment
-// Verifies basic global integer variable handling.
+program test14;
+// Purpose: Demonstrate a syntax error for a missing 'end'.
+// ERROR: The 'begin' for the while loop does not have a matching 'end'.
 
-PROGRAM Test1;
-VAR
-  my_int: INTEGER;
-BEGIN
-  my_int := 123;
-  writeln(my_int);
-END.
+var
+  counter : integer;
 
-// Expected Output: 123
+begin
+  counter := 0;
+  while counter < 5 do
+  begin
+    counter := counter + 1;
+  // Missing 'end;' statement here.
+end.
