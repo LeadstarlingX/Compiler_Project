@@ -8,18 +8,20 @@
     #include <cstdio>
     #include <io.h>
 
+    // --- Global Lexer State ---
+    // These variables must be named 'lin' and 'col' to link with the rest of the project.
     int lin = 1;
     int col = 1;
     int comment_start_lin = 0;
     int comment_start_col = 0;
 
-    // An external reference to the global error flag
+    // An external reference to the global error flag, set by the parser.
     extern bool compilation_has_error;
 
-    // A helper function to help with generating the tokens.txt file.
+    // A helper function to convert a token enum to its string representation for debugging.
     const char* token_to_string(int token, const YYSTYPE& lval) {
         switch (token) {
-            // Keywords
+            // --- Language Keywords ---
             case PROGRAM: return "PROGRAM";
             case VAR: return "VAR";
             case ARRAY: return "ARRAY";
@@ -44,13 +46,13 @@
             case TRUE_KEYWORD: return "TRUE_KEYWORD";
             case FALSE_KEYWORD: return "FALSE_KEYWORD";
 
-            // Literals
+            // --- Value Literals ---
             case NUM: return "NUM";
             case REAL_LITERAL: return "REAL_LITERAL";
             case IDENT: return "IDENT";
             case STRING_LITERAL: return "STRING_LITERAL";
             
-            // Operators & Punctuation
+            // --- Operators and Punctuation ---
             case ASSIGN_OP: return "ASSIGN_OP";
             case EQ_OP: return "EQ_OP";
             case NEQ_OP: return "NEQ_OP";
@@ -60,7 +62,7 @@
             case GTE_OP: return "GTE_OP";
             case DOTDOT: return "DOTDOT";
             
-            // Single characters are their own representation
+            // --- Single Character Tokens ---
             default:
                 if (token >= 0 && token <= 255) {
                     static char buffer[2] = {0};
@@ -73,141 +75,128 @@
 
 %}
 
+/* ================== Flex Options ================== */
 %option caseless noyywrap nounistd never-interactive stack
+
+/* ================== Lexer States ================== */
 %x ML_COMMENT
 
+/* ========== Regular Expression Aliases ========== */
 DIGIT   [0-9]
 ALPHA   [a-zA-Z]
 
 %%
+[ \t]+              { col += yyleng; }
+\r\n|\n|\r          { lin++; col = 1; }
 
-<INITIAL>{
-    /* Whitespace */
-    [ \t]+              { col += yyleng; }
-    \r\n|\n|\r          { lin++; col = 1; }
+"//"[^\n\r]* { col += yyleng; }
+"{"                 {
+                        comment_start_lin = lin;
+                        comment_start_col = col;
+                        col += yyleng;
+                        BEGIN(ML_COMMENT);
+                    }
 
-    /* Comments */
-    "//"[^\n\r]* { col += yyleng; }
-    "{"                 {
-                          comment_start_lin = lin;
-                          comment_start_col = col;
-                          col += yyleng;
-                          BEGIN(ML_COMMENT);
-                        }
-    /* String Literals */
-    \'([^'\n\\]|\\.)*\'  { 
-                          char* s_val = (char*)malloc(yyleng - 1); 
-                          if (s_val) {
-                            strncpy(s_val, yytext + 1, yyleng - 2);
-                            s_val[yyleng - 2] = '\0';
-                            yylval.str_val = s_val;
-                          } else {
+":="                { col += yyleng; return ASSIGN_OP; }
+"<>"                { col += yyleng; return NEQ_OP; }
+"<="                { col += yyleng; return LTE_OP; }
+">="                { col += yyleng; return GTE_OP; }
+".."                { col += yyleng; return DOTDOT; }
+
+"+"                 { col += yyleng; return '+'; }
+"-"                 { col += yyleng; return '-'; }
+"*"                 { col += yyleng; return '*'; }
+"/"                 { col += yyleng; return '/'; }
+"="                 { col += yyleng; return EQ_OP; }
+"<"                 { col += yyleng; return LT_OP; }
+">"                 { col += yyleng; return GT_OP; }
+"("                 { col += yyleng; return '('; }
+")"                 { col += yyleng; return ')'; }
+"["                 { col += yyleng; return '['; }
+"]"                 { col += yyleng; return ']'; }
+":"                 { col += yyleng; return ':'; }
+";"                 { col += yyleng; return ';'; }
+","                 { col += yyleng; return ','; }
+"."                 { col += yyleng; return '.'; }
+
+"program"           { col += yyleng; return PROGRAM; }
+"var"               { col += yyleng; return VAR; }
+"integer"           { col += yyleng; return INTEGER_TYPE; }
+"real"              { col += yyleng; return REAL_TYPE; }
+"function"          { col += yyleng; return FUNCTION; }
+"procedure"         { col += yyleng; return PROCEDURE; }
+"while"             { col += yyleng; return WHILE; }
+"do"                { col += yyleng; return DO; }
+"begin"             { col += yyleng; return BEGIN_TOKEN; }
+"end"               { col += yyleng; return END_TOKEN; }
+"if"                { col += yyleng; return IF; }
+"then"              { col += yyleng; return THEN; }
+"else"              { col += yyleng; return ELSE; }
+"array"             { col += yyleng; return ARRAY; }
+"of"                { col += yyleng; return OF; }
+"div"               { col += yyleng; return DIV_OP; }
+"not"               { col += yyleng; return NOT_OP; }
+"or"                { col += yyleng; return OR_OP; }
+"and"               { col += yyleng; return AND_OP; }
+"boolean"           { col += yyleng; return BOOLEAN_TYPE; }
+"true"              { col += yyleng; return TRUE_KEYWORD; }
+"false"             { col += yyleng; return FALSE_KEYWORD; }
+"return"            { col += yyleng; return RETURN_KEYWORD; }
+
+\'([^'\n\\]|\\.)*\'  { 
+                        char* stringValue = (char*)malloc(yyleng - 1); 
+                        if (stringValue) {
+                            strncpy(stringValue, yytext + 1, yyleng - 2);
+                            stringValue[yyleng - 2] = '\0';
+                            yylval.str_val = stringValue;
+                        } else {
                             fprintf(stderr, "Lexer: Malloc failed for string literal at line %d, col %d\n", lin, col);
                             yyterminate();
-                          }
-                          col += yyleng; 
-                          return STRING_LITERAL;
                         }
+                        col += yyleng; 
+                        return STRING_LITERAL;
+                    }
 
-    /* --- OPERATORS - Specific multi-character operators first --- */
-    ":="                { col += yyleng; return ASSIGN_OP; }
-    "<>"                { col += yyleng; return NEQ_OP; }
-    "<="                { col += yyleng; return LTE_OP; }
-    ">="                { col += yyleng; return GTE_OP; }
-    ".."                { col += yyleng; return DOTDOT; }
+{DIGIT}+\.{DIGIT}+([eE][-+]?{DIGIT}+)? |
+{DIGIT}+\.([eE][-+]?{DIGIT}+)        |
+\.{DIGIT}+([eE][-+]?{DIGIT}+)?        |
+{DIGIT}+[eE][-+]?{DIGIT}+            {
+                                        int tokenStartColumn = col;
+                                        yylval.rawRealLit = new RealLit(atof(yytext), lin, tokenStartColumn);
+                                        col += yyleng;
+                                        return REAL_LITERAL;
+                                    }
 
-    /* Keywords */
-    "program"           { col += yyleng; return PROGRAM; }
-    "var"               { col += yyleng; return VAR; }
-    "integer"           { col += yyleng; return INTEGER_TYPE; }
-    "real"              { col += yyleng; return REAL_TYPE; }
-    "function"          { col += yyleng; return FUNCTION; }
-    "procedure"         { col += yyleng; return PROCEDURE; }
-    "while"             { col += yyleng; return WHILE; }
-    "do"                { col += yyleng; return DO; }
-    "begin"             { col += yyleng; return BEGIN_TOKEN; }
-    "end"               { col += yyleng; return END_TOKEN; }
-    "if"                { col += yyleng; return IF; }
-    "then"              { col += yyleng; return THEN; }
-    "else"              { col += yyleng; return ELSE; }
-    "array"             { col += yyleng; return ARRAY; }
-    "of"                { col += yyleng; return OF; }
-    "div"               { col += yyleng; return DIV_OP; }
-    "not"               { col += yyleng; return NOT_OP; }
-    "or"                { col += yyleng; return OR_OP; }
-    "and"               { col += yyleng; return AND_OP; }
-    "boolean"           { col += yyleng; return BOOLEAN_TYPE; }
-    "true"              { col += yyleng; return TRUE_KEYWORD; }
-    "false"             { col += yyleng; return FALSE_KEYWORD; }
-    "return"            { col += yyleng; return RETURN_KEYWORD; }
-    
-    /* --- Literals --- */
-    /* Real literals */
-    {DIGIT}+\.{DIGIT}+([eE][-+]?{DIGIT}+)? |
-    {DIGIT}+\.([eE][-+]?{DIGIT}+)        |
-    \.{DIGIT}+([eE][-+]?{DIGIT}+)?        |
-    {DIGIT}+[eE][-+]?{DIGIT}+ { /* <<< ACTION BLOCK'S OPENING BRACE IS HERE, ON THE SAME LINE */
-        int token_start_col = col; // Capture start column for the AST node
-        yylval.rawRealLit = new RealLit(atof(yytext), lin, token_start_col);
-        col += yyleng; // Update global column position
-        return REAL_LITERAL;
-    }
+{DIGIT}+            { 
+                        int tokenStartColumn = col;
+                        yylval.rawNum = new Num(atoi(yytext), lin, tokenStartColumn);
+                        col += yyleng;
+                        return NUM; 
+                    }
 
+({ALPHA}|_)({ALPHA}|{DIGIT}|_)* {
+                                    int tokenStartColumn = col;
+                                    yylval.rawIdent = new Ident(std::string(yytext), lin, tokenStartColumn);
+                                    col += yyleng;
+                                    return IDENT;
+                                }
 
-    /* Integer Literal */
-    {DIGIT}+ { 
-        int token_start_col = col; // Capture start column
-        yylval.rawNum = new Num(atoi(yytext), lin, token_start_col);
-        col+= yyleng; // Update global column position
-        return NUM; 
-    }
+.                   {
+                        fprintf(stderr, "Lexical Error (L:%d, C:%d): Unexpected character '%c'\n", lin, col, *yytext);
+                        col += yyleng;
+                    }
 
-    /* Identifiers - after keywords */
-    ({ALPHA}|_)({ALPHA}|{DIGIT}|_)* {
-        int token_start_col = col; // Capture start column
-        yylval.rawIdent = new Ident(std::string(yytext), lin, token_start_col);
-        col += yyleng; // Update global column position
-        return IDENT;
-    }
-
-    /* Single Character Operators & Punctuation */
-    "+"                 { col += yyleng; return '+'; }
-    "-"                 { col += yyleng; return '-'; }
-    "*"                 { col += yyleng; return '*'; }
-    "/"                 { col += yyleng; return '/'; }
-    "="                 { col += yyleng; return EQ_OP; }
-    "<"                 { col += yyleng; return LT_OP; }
-    ">"                 { col += yyleng; return GT_OP; }
-    "("                 { col += yyleng; return '('; }
-    ")"                 { col += yyleng; return ')'; }
-    "["                 { col += yyleng; return '['; }
-    "]"                 { col += yyleng; return ']'; }
-    ":"                 { col += yyleng; return ':'; }
-    ";"                 { col += yyleng; return ';'; }
-    ","                 { col += yyleng; return ','; }
-    "."                 { col += yyleng; return '.'; } /* Single dot, AFTER DOTDOT */
-
-
-    .                   {
-                          // Standardized error format
-                          fprintf(stderr, "Lexical Error (L:%d, C:%d): Unexpected character '%c'\n", lin, col, *yytext);
-                          col += yyleng;
-                        }
-}
-
-<ML_COMMENT>{
-    "}"                 { col += yyleng; BEGIN(INITIAL); }
-    [^{}\n\r]+          { col += yyleng; }
-    \r\n|\n|\r          { lin++; col = 1; }
-    "{"                 {
-                          std::cerr << "Warning: Nested comment '{' at L" << lin << ", C" << col << std::endl;
-                          col += yyleng;
-                        }
-    <<EOF>>             {
-                          std::cerr << "Lexical Error: Unterminated comment from L" << comment_start_lin << ", C" << comment_start_col << std::endl;
-                          BEGIN(INITIAL);
-                          yyterminate();
-                        }
-}
+<ML_COMMENT>"}"                 { col += yyleng; BEGIN(INITIAL); }
+<ML_COMMENT>[^{}\n\r]+          { col += yyleng; }
+<ML_COMMENT>\r\n|\n|\r          { lin++; col = 1; }
+<ML_COMMENT>"{"                 {
+                                    std::cerr << "Warning: Nested comment '{' at L" << lin << ", C" << col << std::endl;
+                                    col += yyleng;
+                                }
+<ML_COMMENT><<EOF>>             {
+                                    std::cerr << "Lexical Error: Unterminated comment from L" << comment_start_lin << ", C" << comment_start_col << std::endl;
+                                    BEGIN(INITIAL);
+                                    yyterminate();
+                                }
 
 %%
