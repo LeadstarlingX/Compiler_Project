@@ -22,5 +22,5 @@ begin
     total := total + numbers[index];
     index := index + 1;
   end;
-  // At the end, non-zero code 
+  
 end.
