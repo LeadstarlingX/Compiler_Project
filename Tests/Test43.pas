@@ -9,11 +9,6 @@ BEGIN
   writeln('Returned from ProcB to ProcA.');
 END;
 
-// ProcB is defined *after* it is called by ProcA.
-PROCEDURE ProcB;
-BEGIN
-  writeln('Executing ProcB.');
-END;
 
 BEGIN
   writeln('Main program started.');
